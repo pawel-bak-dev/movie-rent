@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-export const Customer = mongoose.model(
+const Customer = mongoose.model(
   "Customer",
   new mongoose.Schema({
     isGold: {
@@ -23,7 +23,7 @@ export const Customer = mongoose.model(
   })
 );
 
-export function validate(customer) {
+function validate(customer) {
   const schema = Joi.object({
     isGold: Joi.boolean(),
     name: Joi.string().min(3).max(50).required(),
@@ -32,3 +32,6 @@ export function validate(customer) {
 
   return schema.validate(customer);
 }
+
+exports.Customer = Customer;
+exports.validate = validate;
