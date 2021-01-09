@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const { genreSchema } = require("genre");
+const { genreSchema } = require("./genre");
 
 const Movie = mongoose.model(
   "Movie",
@@ -29,7 +29,7 @@ const Movie = mongoose.model(
 function validate(movie) {
   const schema = Joi.object({
     title: Joi.boolean(),
-    genreId: Joi.string().required(),
+    genreId: Joi.objectId().required(),
     numberInStock: Joi.number(),
     dailyRentalRate: Joi.number(),
   });
