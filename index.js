@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
@@ -9,6 +10,11 @@ const express = require("express");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const app = express();
+
+if (!process.env.JWT_PRIVATE_KEY) {
+  console.error("FATAL ERROR: jwtPrivateKey is not defined.");
+  process.exit(1);
+}
 
 mongoose
   .connect("mongodb://localhost/movie-rent")
