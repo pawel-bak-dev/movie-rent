@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
@@ -16,7 +17,10 @@ router.post("/", async (req, res) => {
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) return res.status(400).send("Invalid email or password");
 
-  res.send(true);
+  // TODO extract to env
+  const token = jwt.sign({ _id: user._id }, "jwtPrivateKey");
+
+  res.send(token);
 });
 
 function validate(req) {
